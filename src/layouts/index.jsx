@@ -10,6 +10,7 @@ import * as indexPageStyles from "../styles/pages/index.module.scss";
 
 import { LIGHT, DARK } from "../constants/Themes";
 import { THEME } from "../constants/StorageKeys";
+import Seo from "../components/SEO";
 
 const Layout = (props) => {
   const [theme, setTheme] = useState(null);
@@ -41,6 +42,10 @@ const Layout = (props) => {
 
     loadTheme();
   }, [theme]);
+
+  if (!theme) {
+    return <Seo title="Dakshraj Sharma" />;
+  }
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

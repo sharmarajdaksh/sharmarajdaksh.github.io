@@ -5858,7 +5858,6 @@ const Layout = props => {
 
     loadTheme();
   }, [theme]);
-  if (!theme) return null;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_context_Theme_context__WEBPACK_IMPORTED_MODULE_6__.default.Provider, {
     value: {
       theme,
