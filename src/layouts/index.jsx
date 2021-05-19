@@ -42,8 +42,6 @@ const Layout = (props) => {
     loadTheme();
   }, [theme]);
 
-  if (!theme) return null;
-
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <Helmet>
