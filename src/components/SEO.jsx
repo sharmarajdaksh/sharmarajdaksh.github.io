@@ -51,7 +51,8 @@ const Seo = ({ title, meta, description }) => {
           content: `website`,
         },
         {
-          name: `og:image`,
+          name: `image`,
+          property: `og:image`,
           content: ogImage,
         },
         {
@@ -77,6 +78,10 @@ const Seo = ({ title, meta, description }) => {
         {
           name: `twitter:description`,
           content: description,
+        },
+        {
+          name: `author`,
+          content: seo.author,
         },
       ].concat(meta)}
     />
