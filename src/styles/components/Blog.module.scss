@@ -139,7 +139,11 @@
     }
 
     .titlesection {
-      margin-bottom: 0rem;
+      padding-bottom: 2rem;
+      margin-bottom: 1rem;
+      border-bottom-width: 2px;
+      border-bottom-color: #aaa;
+      border-style: dashed;
       text-align: left;
       width: 90%;
       max-width: 700px;
@@ -169,10 +173,12 @@
     .bloglist__content {
       margin-top: 4%;
       line-height: 1.4;
+      font-size: 0.85rem;
     }
 
     .footer {
       font-size: 0.75rem;
+      margin-top: 2rem;
     }
 
     .blogpost__content {
@@ -202,7 +208,6 @@
     }
 
     .backToTop {
-      // font-size: 2rem;
       bottom: 4rem;
     }
   }
