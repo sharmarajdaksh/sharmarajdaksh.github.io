@@ -1,0 +1,11 @@
+@import "../utils/breakpoints";
+
+.page__shell {
+  display: flex;
+  max-width: 100vw;
+
+  @include breakpoint-tablet-vertical {
+    flex-flow: column-reverse;
+    justify-content: flex-end;
+  }
+}
