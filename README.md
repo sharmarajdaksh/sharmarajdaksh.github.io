@@ -3,4 +3,4 @@
 ## TODO:
 
 - [ ] Social sharing links for blogposts
-- [ ] Add an about me page
+- [x] Add an about me page
