@@ -31,7 +31,11 @@ const Aside = () => {
         )}
         key={socialIconData.url}
       >
-        <a href={socialIconData.url} aria-label={socialIconData.label}>
+        <a
+          href={socialIconData.url}
+          aria-label={socialIconData.label}
+          target="__blank"
+        >
           <socialIconData.icon />
         </a>
       </div>

@@ -1,6 +1,6 @@
-import Blog from "../components/Blog";
 import React from "react";
 import { graphql } from "gatsby";
+import Blog from "../components/Blog.component";
 
 const BlogPage = ({
   data: {

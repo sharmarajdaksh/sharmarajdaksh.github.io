@@ -18,10 +18,10 @@ import {
   main__shellLight,
 } from "../styles/components/Main.module.scss";
 import ThemeContext from "../context/Theme.context";
-import BlogTitle from "../components/BlogTitle";
-import BlogFooter from "../components/BlogFooter";
+import BlogTitle from "../components/BlogTitle.component";
+import BlogFooter from "../components/BlogFooter.component";
 import mdxShortcodes from "../mdx-components";
-import Seo from "../components/SEO";
+import Seo from "../components/SEO.component";
 
 const BlogPost = ({
   data: {

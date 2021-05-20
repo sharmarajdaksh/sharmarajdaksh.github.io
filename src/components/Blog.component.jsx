@@ -9,10 +9,10 @@ import {
 } from "../styles/components/Main.module.scss";
 import { useContext } from "react";
 import { DARK } from "../constants/Themes";
-import BlogPostListItem from "./BlogPostListItem";
-import BlogTitle from "./BlogTitle";
-import BlogFooter from "./BlogFooter";
-import Seo from "./SEO";
+import BlogPostListItem from "./BlogPostListItem.component";
+import BlogTitle from "./BlogTitle.component";
+import BlogFooter from "./BlogFooter.component";
+import Seo from "./SEO.component";
 import { BLOG_DESCRIPTION } from "../constants/Blog";
 
 const Blog = ({ posts, siteUrl }) => {

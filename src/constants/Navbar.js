@@ -4,6 +4,8 @@ export const LINKEDIN_URL = "https://www.linkedin.com/in/sharmarajdaksh/";
 export const GITHUB_URL = "https://github.com/sharmarajdaksh";
 export const MEDIUM_URL = "https://medium.com/@sharmarajdaksh";
 export const EMAIL = "sharmarajdaksh@gmail.com";
+export const GOODREADS_URL =
+  "https://www.goodreads.com/user/show/21277948-dakshraj-sharma";
 export const SOCIAL_ICONS_DATA = [
   {
     url: GITHUB_URL,
