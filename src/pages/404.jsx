@@ -11,7 +11,7 @@ import {
 import { main404 } from "../styles/pages/404.module.scss";
 import { DARK } from "../constants/Themes";
 import { MESSAGE } from "../constants/404";
-import Seo from "../components/SEO";
+import Seo from "../components/SEO.component";
 
 const Page404 = () => {
   const { theme } = React.useContext(ThemeContext);

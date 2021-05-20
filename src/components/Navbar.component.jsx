@@ -26,6 +26,10 @@ const Navbar = () => {
       label: "Blog",
       href: "/blog",
     },
+    {
+      label: "About",
+      href: "/about",
+    },
   ];
 
   return (

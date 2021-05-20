@@ -6,11 +6,11 @@ import "../styles/utils/index.scss";
 import Aside from "../components/Aside.component";
 import Navbar from "../components/Navbar.component";
 import ThemeContext from "../context/Theme.context";
-import * as indexPageStyles from "../styles/pages/index.module.scss";
+import { page__shell } from "../styles/pages/index.module.scss";
 
 import { LIGHT, DARK } from "../constants/Themes";
 import { THEME } from "../constants/StorageKeys";
-import Seo from "../components/SEO";
+import Seo from "../components/SEO.component";
 
 const Layout = (props) => {
   const [theme, setTheme] = useState(null);
@@ -52,7 +52,7 @@ const Layout = (props) => {
       <Helmet>
         <meta name="icon" href="./images/favicon.png" />
       </Helmet>
-      <div className={indexPageStyles.page__shell}>
+      <div className={page__shell}>
         <Navbar></Navbar>
         <Aside></Aside>
         {props.children}

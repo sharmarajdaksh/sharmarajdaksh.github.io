@@ -10,9 +10,9 @@ import {
 import { useContext } from "react";
 import { DARK } from "../constants/Themes";
 import Seo from "./SEO.component";
-import Landing from "./Landing.component";
+import AboutContent from "./AboutContent.component";
 
-const Main = () => {
+const About = () => {
   const { theme } = useContext(ThemeContext);
   const darkMode = theme === DARK;
 
@@ -20,12 +20,12 @@ const Main = () => {
     <main
       className={classnames(main__shell, darkMode ? null : main__shellLight)}
     >
-      <Seo title={"Home"} />
+      <Seo title={"About"} />
       <section className={main__section}>
-        <Landing />
+        <AboutContent />
       </section>
     </main>
   );
 };
 
-export default Main;
+export default About;
