@@ -8,7 +8,6 @@ import {
   aboutMain,
   aboutMainQuote,
   aboutMainContent,
-  smileEmoji,
 } from "../styles/components/About.module.scss";
 import { StaticImage } from "gatsby-plugin-image";
 import * as about from "../constants/About";
@@ -29,10 +28,7 @@ const AboutContent = () => {
           />
         </div>
         <div className={aboutMain}>
-          <div className={aboutMainQuote}>
-            {about.tagline}
-            <span className={smileEmoji}>{"☻"}</span>
-          </div>
+          <div className={aboutMainQuote}>{about.tagline}</div>
           <div className={aboutMainContent}>
             I'm <strong>Dakshraj Sharma</strong>. I do software, and I do it
             pretty well, from the frontend to the backend to the cloud. When I'm
