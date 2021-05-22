@@ -48,7 +48,11 @@ const BlogPost = ({
       />
       <BlogTitle />
       <section className={blogpost__content}>
-        <div className={blogpost__header}>
+        <div
+          className={blogpost__header}
+          data-aos="fade-up"
+          data-aos-duration="250"
+        >
           <div className={blogpost__title}>{mdx.frontmatter.title}</div>
           <div className={blogpost__subtitle}>
             {mdx.frontmatter.listingContent}
@@ -59,9 +63,11 @@ const BlogPost = ({
           </div>
           <div className={divider}></div>
         </div>
-        <MDXProvider components={mdxShortcodes}>
-          <MDXRenderer>{mdx.body}</MDXRenderer>
-        </MDXProvider>
+        <div data-aos="fade-up" data-aos-duration="1000">
+          <MDXProvider components={mdxShortcodes}>
+            <MDXRenderer>{mdx.body}</MDXRenderer>
+          </MDXProvider>
+        </div>
       </section>
       <div className={divider}></div>
       <BlogFooter />

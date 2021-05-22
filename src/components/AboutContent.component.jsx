@@ -18,7 +18,11 @@ const AboutContent = () => {
   return (
     <div className={classnames(landing, aboutLanding)}>
       <div className={aboutOuter}>
-        <div className={aboutImageOuter}>
+        <div
+          className={aboutImageOuter}
+          data-aos="fade-up"
+          data-aos-duration="500"
+        >
           <StaticImage
             alt="Me, Dakshraj Sharma"
             src="../images/me.png"
@@ -28,8 +32,19 @@ const AboutContent = () => {
           />
         </div>
         <div className={aboutMain}>
-          <div className={aboutMainQuote}>{about.tagline}</div>
-          <div className={aboutMainContent}>
+          <div
+            className={aboutMainQuote}
+            data-aos="fade-up"
+            data-aos-duration="500"
+          >
+            {about.tagline}
+          </div>
+          <div
+            className={aboutMainContent}
+            data-aos="fade-up"
+            data-aos-delay="250"
+            data-aos-duration="500"
+          >
             I'm <strong>Dakshraj Sharma</strong>. I do software, and I do it
             pretty well, from the frontend to the backend to the cloud. When I'm
             not developing, I like to read (

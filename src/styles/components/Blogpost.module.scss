@@ -30,7 +30,7 @@
   font-size: 0.9rem;
   line-height: 1.4;
   padding: "1%";
-  font-family: "Source Code Pro";
+  font-family: "Source Code Pro", monospace !important;
   margin-top: 4%;
   margin-bottom: 4%;
   padding: 4%;
@@ -45,7 +45,7 @@
 }
 
 .code {
-  font-family: "Source Code Pro";
+  font-family: "Source Code Pro", monospace !important;
   display: inline;
   font-size: 0.9rem;
   background-color: #333;
