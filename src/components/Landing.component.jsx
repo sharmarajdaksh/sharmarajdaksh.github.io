@@ -10,7 +10,7 @@ import {
 
 const Landing = () => {
   return (
-    <div className={landing}>
+    <div className={landing} data-aos="fade-up" data-aos-duration="500">
       <p className={preText}>{PRETEXT}</p>
       <h1 className={name}>{NAME}</h1>
       <p className={postText}>{POSTTEXT}</p>

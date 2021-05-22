@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 
 import "../styles/utils/reset.scss";
 import "../styles/utils/index.scss";
+import "../../node_modules/aos/dist/aos.css";
 import Aside from "../components/Aside.component";
 import Navbar from "../components/Navbar.component";
 import ThemeContext from "../context/Theme.context";
@@ -14,6 +15,7 @@ import Seo from "../components/SEO.component";
 
 const Layout = (props) => {
   const [theme, setTheme] = useState(null);
+  let AOS;
 
   const toggleTheme = async () => {
     let updatedTheme = LIGHT;
@@ -40,8 +42,22 @@ const Layout = (props) => {
       setTheme(readTheme);
     };
 
+    const loadAos = async () => {
+      const AOS = require("aos");
+      AOS.init({
+        once: true,
+      });
+    };
+
+    loadAos();
     loadTheme();
   }, [theme]);
+
+  useEffect(() => {
+    if (AOS) {
+      AOS.refresh();
+    }
+  });
 
   if (!theme) {
     return <Seo title="Dakshraj Sharma" />;
