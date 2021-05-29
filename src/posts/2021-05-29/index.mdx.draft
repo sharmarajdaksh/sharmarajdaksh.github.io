@@ -1,0 +1,29 @@
+---
+title: From index.js to Kubernetes ASAP
+slug: from-indexjs-to-k8s-ASAP
+author: Dakshraj Sharma
+date: May 29, 2021
+dateNumeric: 2021-05-29
+listingContent: Kubernetes isn't scary. Really. I promise.
+keywords: kubernetes, k8s, docker, node, node.js, containers, container orchestration, declarative approach
+embeddedImagesLocal:
+  -
+---
+
+Kubernetes, or K8s for short, isn't new. It's been around for about seven years now.
+Seven years isn't a very long time in tech terms, but over this time K8s has evolved rapidly,
+giving rise to a mature ecosystem, with flavors and distributions of K8s to fit almost any business need.
+
+For software engineers who've been working with backend technologies, who've perhaps come across
+and worked with Docker, K8s can sometimes seem like a different beast.
+Like it is a technology you need to take a long time to just start with, let alone master.
+I understand because I sometimes felt similarly. But let's clear up these thoughts a little.
+
+Yes, you'll probably never completely master Kubernetes. It's too vast and there is too much to learn.
+Instead, you'll eventually get a better understanding of the core features of Kubernetes as you work with it
+and be able to understand what you need it to do.
+Research, figure out that new K8s plugin that could help you achieve your goal, use it, and get your use case working.
+Rinse and repeat. Maybe write a blog post about it. This, in my opinion, is the better approach to get used to K8s:
+use it, and learn what you need to, to be able to use it better.
+
+No, it isn't all that hard to get started. Let me show you how.

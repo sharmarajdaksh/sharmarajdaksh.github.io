@@ -11,16 +11,21 @@ import { useContext } from "react";
 import { DARK } from "../constants/Themes";
 import Seo from "./SEO.component";
 import AboutContent from "./AboutContent.component";
+import SeoContext from "../context/Seo.context";
 
 const About = () => {
   const { theme } = useContext(ThemeContext);
   const darkMode = theme === DARK;
+  const { setSeo } = React.useContext(SeoContext);
+
+  React.useEffect(() => {
+    setSeo(<Seo title={"About"} />);
+  }, [setSeo]);
 
   return (
     <main
       className={classnames(main__shell, darkMode ? null : main__shellLight)}
     >
-      <Seo title={"About"} />
       <section className={main__section}>
         <AboutContent />
       </section>
