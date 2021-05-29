@@ -12,9 +12,11 @@ import { page__shell } from "../styles/pages/index.module.scss";
 import { LIGHT, DARK } from "../constants/Themes";
 import { THEME } from "../constants/StorageKeys";
 import Seo from "../components/SEO.component";
+import SeoContext from "../context/Seo.context";
 
 const Layout = (props) => {
   const [theme, setTheme] = useState(null);
+  const [seo, setSeo] = useState(null);
   let AOS;
 
   const toggleTheme = async () => {
@@ -59,21 +61,24 @@ const Layout = (props) => {
     }
   });
 
-  if (!theme) {
-    return <Seo title="Dakshraj Sharma" />;
-  }
-
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <>
       <Helmet>
         <meta name="icon" href="./images/favicon.png" />
       </Helmet>
-      <div className={page__shell}>
-        <Navbar></Navbar>
-        <Aside></Aside>
-        {props.children}
-      </div>
-    </ThemeContext.Provider>
+      {seo ? seo : <Seo title="Dakshraj Sharma" />}
+      <SeoContext.Provider value={{ setSeo }}>
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+          {theme ? (
+            <div className={page__shell}>
+              <Navbar></Navbar>
+              <Aside></Aside>
+              {props.children}
+            </div>
+          ) : null}
+        </ThemeContext.Provider>
+      </SeoContext.Provider>
+    </>
   );
 };
 
