@@ -19,7 +19,7 @@ const About = () => {
   const { setSeo } = React.useContext(SeoContext);
 
   React.useEffect(() => {
-    setSeo(<Seo title={"About"} />);
+    setSeo(<Seo title={"About"} slug={"/about"} />);
   }, [setSeo]);
 
   return (
