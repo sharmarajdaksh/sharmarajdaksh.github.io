@@ -42,6 +42,7 @@ const BlogPost = ({
         title={mdx.frontmatter.title}
         description={mdx.frontmatter.listingContent}
         additionalKeywords={mdx.frontmatter.keywords}
+        slug={"/blog/" + mdx.frontmatter.slug}
       />
     );
   }, [

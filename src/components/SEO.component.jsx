@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import * as seo from "../constants/SEO";
 import { useStaticQuery, graphql } from "gatsby";
 
-const Seo = ({ title, meta, description, additionalKeywords }) => {
+const Seo = ({ title, meta, description, additionalKeywords, slug }) => {
   const data = useStaticQuery(graphql`
     query {
       site {
@@ -16,7 +16,7 @@ const Seo = ({ title, meta, description, additionalKeywords }) => {
   `);
 
   const ogImage = data.site.siteMetadata.ogImage;
-  const siteUrl = data.site.siteMetadata.siteUrl;
+  const siteUrl = data.site.siteMetadata.siteUrl + (slug ? slug : "");
 
   return (
     <Helmet
@@ -96,6 +96,7 @@ Seo.defaultProps = {
   meta: [],
   description: seo.metaDescription,
   additionalKeywords: "",
+  slug: null,
 };
 
 export default Seo;

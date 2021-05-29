@@ -22,7 +22,9 @@ const Blog = ({ posts, siteUrl }) => {
   const { setSeo } = React.useContext(SeoContext);
 
   React.useEffect(() => {
-    setSeo(<Seo title={"Blog"} description={BLOG_DESCRIPTION} />);
+    setSeo(
+      <Seo title={"Blog"} description={BLOG_DESCRIPTION} slug={"/blog"} />
+    );
   }, [setSeo]);
 
   return (
