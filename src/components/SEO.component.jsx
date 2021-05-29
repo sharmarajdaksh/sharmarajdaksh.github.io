@@ -96,7 +96,7 @@ Seo.defaultProps = {
   meta: [],
   description: seo.metaDescription,
   additionalKeywords: "",
-  url: null,
+  slug: null,
 };
 
 export default Seo;
