@@ -7,6 +7,7 @@ import classnames from "classnames";
 import {
   landing,
   divider,
+  dividerFooter,
   blogpost__content,
   blogpost__title,
   blogpost__subtitle,
@@ -83,7 +84,7 @@ const BlogPost = ({
           </MDXProvider>
         </div>
       </section>
-      <div className={divider}></div>
+      <div className={dividerFooter}></div>
       <BlogFooter />
     </main>
   );
