@@ -26,6 +26,7 @@ const About = () => {
     <main
       className={classnames(main__shell, darkMode ? null : main__shellLight)}
     >
+      <Seo title={"About"} slug={"/about"} />;
       <section className={main__section}>
         <AboutContent />
       </section>

@@ -35,6 +35,7 @@ const Blog = ({ posts, siteUrl }) => {
         landing
       )}
     >
+      <Seo title={"Blog"} description={BLOG_DESCRIPTION} slug={"/blog"} />
       <BlogTitle />
       <div className={postslist}>
         {posts.map(
