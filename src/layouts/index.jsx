@@ -20,7 +20,7 @@ import classnames from "classnames";
 
 const Layout = (props) => {
   const [theme, setTheme] = useState(null);
-  const [seo, setSeo] = useState(null);
+  const [seo, setSeo] = useState(<Seo title="Dakshraj Sharma" />);
   let AOS;
 
   const toggleTheme = async () => {
@@ -72,7 +72,7 @@ const Layout = (props) => {
       <Helmet>
         <meta name="icon" href="./images/favicon.png" />
       </Helmet>
-      {seo ? seo : <Seo title="Dakshraj Sharma" />}
+      {seo}
       <SeoContext.Provider value={{ setSeo }}>
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
           {theme ? (

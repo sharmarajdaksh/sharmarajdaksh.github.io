@@ -62,6 +62,12 @@ const BlogPost = ({
         landing
       )}
     >
+      <Seo
+        title={mdx.frontmatter.title}
+        description={mdx.frontmatter.listingContent}
+        additionalKeywords={mdx.frontmatter.keywords}
+        slug={"/blog/" + mdx.frontmatter.slug}
+      />
       <BlogTitle />
       <section className={blogpost__content}>
         <div
