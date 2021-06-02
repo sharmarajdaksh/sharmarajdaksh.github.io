@@ -7,12 +7,16 @@ import "../../node_modules/aos/dist/aos.css";
 import Aside from "../components/Aside.component";
 import Navbar from "../components/Navbar.component";
 import ThemeContext from "../context/Theme.context";
-import { page__shell } from "../styles/pages/index.module.scss";
+import {
+  page__shell,
+  page__shellLight,
+} from "../styles/pages/index.module.scss";
 
 import { LIGHT, DARK } from "../constants/Themes";
 import { THEME } from "../constants/StorageKeys";
 import Seo from "../components/SEO.component";
 import SeoContext from "../context/Seo.context";
+import classnames from "classnames";
 
 const Layout = (props) => {
   const [theme, setTheme] = useState(null);
@@ -61,6 +65,8 @@ const Layout = (props) => {
     }
   });
 
+  const isDarkMode = theme === DARK;
+
   return (
     <>
       <Helmet>
@@ -70,12 +76,32 @@ const Layout = (props) => {
       <SeoContext.Provider value={{ setSeo }}>
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
           {theme ? (
-            <div className={page__shell}>
+            <div
+              className={
+                isDarkMode
+                  ? page__shell
+                  : classnames(page__shell, page__shellLight)
+              }
+            >
               <Navbar></Navbar>
               <Aside></Aside>
               {props.children}
             </div>
-          ) : null}
+          ) : (
+            <div
+              className={
+                isDarkMode
+                  ? page__shell
+                  : classnames(page__shell, page__shellLight)
+              }
+            >
+              <div style={{ visibility: "hidden" }}>
+                <Navbar></Navbar>
+                <Aside></Aside>
+                {props.children}
+              </div>
+            </div>
+          )}
         </ThemeContext.Provider>
       </SeoContext.Provider>
     </>

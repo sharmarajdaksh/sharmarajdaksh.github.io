@@ -51,6 +51,7 @@ const BlogPost = ({
     mdx.frontmatter.keywords,
     mdx.frontmatter.listingContent,
     mdx.frontmatter.title,
+    mdx.frontmatter.slug,
   ]);
 
   return (
