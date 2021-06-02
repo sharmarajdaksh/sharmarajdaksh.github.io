@@ -12,20 +12,10 @@ import { DARK } from "../constants/Themes";
 import BlogPostListItem from "./BlogPostListItem.component";
 import BlogTitle from "./BlogTitle.component";
 import BlogFooter from "./BlogFooter.component";
-import Seo from "./SEO.component";
-import { BLOG_DESCRIPTION } from "../constants/Blog";
-import SeoContext from "../context/Seo.context";
 
 const Blog = ({ posts, siteUrl }) => {
   const { theme } = useContext(ThemeContext);
   const darkMode = theme === DARK;
-  const { setSeo } = React.useContext(SeoContext);
-
-  React.useEffect(() => {
-    setSeo(
-      <Seo title={"Blog"} description={BLOG_DESCRIPTION} slug={"/blog"} />
-    );
-  }, [setSeo]);
 
   return (
     <main
@@ -35,7 +25,6 @@ const Blog = ({ posts, siteUrl }) => {
         landing
       )}
     >
-      <Seo title={"Blog"} description={BLOG_DESCRIPTION} slug={"/blog"} />
       <BlogTitle />
       <div className={postslist}>
         {posts.map(

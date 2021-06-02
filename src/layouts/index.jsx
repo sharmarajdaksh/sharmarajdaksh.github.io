@@ -14,13 +14,10 @@ import {
 
 import { LIGHT, DARK } from "../constants/Themes";
 import { THEME } from "../constants/StorageKeys";
-import Seo from "../components/SEO.component";
-import SeoContext from "../context/Seo.context";
 import classnames from "classnames";
 
 const Layout = (props) => {
   const [theme, setTheme] = useState(null);
-  const [seo, setSeo] = useState(<Seo title="Dakshraj Sharma" />);
   let AOS;
 
   const toggleTheme = async () => {
@@ -72,38 +69,27 @@ const Layout = (props) => {
       <Helmet>
         <meta name="icon" href="./images/favicon.png" />
       </Helmet>
-      {seo}
-      <SeoContext.Provider value={{ setSeo }}>
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <div
+          className={
+            isDarkMode ? page__shell : classnames(page__shell, page__shellLight)
+          }
+        >
           {theme ? (
-            <div
-              className={
-                isDarkMode
-                  ? page__shell
-                  : classnames(page__shell, page__shellLight)
-              }
-            >
+            <>
+              <Navbar></Navbar>
+              <Aside></Aside>
+              {props.children}
+            </>
+          ) : (
+            <div style={{ visibility: "hidden" }}>
               <Navbar></Navbar>
               <Aside></Aside>
               {props.children}
             </div>
-          ) : (
-            <div
-              className={
-                isDarkMode
-                  ? page__shell
-                  : classnames(page__shell, page__shellLight)
-              }
-            >
-              <div style={{ visibility: "hidden" }}>
-                <Navbar></Navbar>
-                <Aside></Aside>
-                {props.children}
-              </div>
-            </div>
           )}
-        </ThemeContext.Provider>
-      </SeoContext.Provider>
+        </div>
+      </ThemeContext.Provider>
     </>
   );
 };

@@ -23,7 +23,6 @@ import BlogTitle from "../components/BlogTitle.component";
 import BlogFooter from "../components/BlogFooter.component";
 import mdxShortcodes from "../mdx-components";
 import Seo from "../components/SEO.component";
-import SeoContext from "../context/Seo.context";
 
 const BlogPost = ({
   data: {
@@ -35,26 +34,17 @@ const BlogPost = ({
 }) => {
   const { theme } = React.useContext(ThemeContext);
   const darkMode = theme === DARK;
-  const { setSeo } = React.useContext(SeoContext);
 
-  React.useEffect(() => {
-    setSeo(
-      <Seo
-        title={mdx.frontmatter.title}
-        description={mdx.frontmatter.listingContent}
-        additionalKeywords={mdx.frontmatter.keywords}
-        slug={"/blog/" + mdx.frontmatter.slug}
-      />
-    );
-  }, [
-    setSeo,
-    mdx.frontmatter.keywords,
-    mdx.frontmatter.listingContent,
-    mdx.frontmatter.title,
-    mdx.frontmatter.slug,
-  ]);
+  const seo = (
+    <Seo
+      title={mdx.frontmatter.title}
+      description={mdx.frontmatter.listingContent}
+      additionalKeywords={mdx.frontmatter.keywords}
+      slug={"/blog/" + mdx.frontmatter.slug}
+    />
+  );
 
-  return (
+  const core = (
     <main
       className={classnames(
         main__shell,
@@ -62,12 +52,6 @@ const BlogPost = ({
         landing
       )}
     >
-      <Seo
-        title={mdx.frontmatter.title}
-        description={mdx.frontmatter.listingContent}
-        additionalKeywords={mdx.frontmatter.keywords}
-        slug={"/blog/" + mdx.frontmatter.slug}
-      />
       <BlogTitle />
       <section className={blogpost__content}>
         <div
@@ -94,6 +78,13 @@ const BlogPost = ({
       <div className={dividerFooter}></div>
       <BlogFooter />
     </main>
+  );
+
+  return (
+    <>
+      {seo}
+      {core}
+    </>
   );
 };
 
