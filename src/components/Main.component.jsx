@@ -9,18 +9,11 @@ import {
 } from "../styles/components/Main.module.scss";
 import { useContext } from "react";
 import { DARK } from "../constants/Themes";
-import Seo from "./SEO.component";
 import Landing from "./Landing.component";
-import SeoContext from "../context/Seo.context";
 
 const Main = () => {
   const { theme } = useContext(ThemeContext);
   const darkMode = theme === DARK;
-  const { setSeo } = React.useContext(SeoContext);
-
-  React.useContext(() => {
-    setSeo(<Seo title={"Home"} />);
-  }, [setSeo]);
 
   return (
     <main

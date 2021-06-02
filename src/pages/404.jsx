@@ -12,25 +12,31 @@ import { main404 } from "../styles/pages/404.module.scss";
 import { DARK } from "../constants/Themes";
 import { MESSAGE } from "../constants/404";
 import Seo from "../components/SEO.component";
-import SeoContext from "../context/Seo.context";
 
 const Page404 = () => {
   const { theme } = React.useContext(ThemeContext);
 
   const darkMode = theme === DARK;
 
-  const { setSeo } = React.useContext(SeoContext);
+  const seo = <Seo title={"OOPS!"} />;
 
-  React.useEffect(() => {
-    setSeo(<Seo title={"OOPS"} />);
-  }, [setSeo]);
+  const core = (
+    <>
+      <main
+        className={classnames(main__shell, darkMode ? "" : main__shellLight)}
+      >
+        <section className={main__section}>
+          <div className={main404}>{MESSAGE}</div>
+        </section>
+      </main>
+    </>
+  );
 
   return (
-    <main className={classnames(main__shell, darkMode ? "" : main__shellLight)}>
-      <section className={main__section}>
-        <div className={main404}>{MESSAGE}</div>
-      </section>
-    </main>
+    <>
+      {seo}
+      {core}
+    </>
   );
 };
 
