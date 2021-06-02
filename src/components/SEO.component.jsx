@@ -59,6 +59,9 @@ const Seo = ({ title, meta, description, additionalKeywords, slug }) => {
         },
         {
           name: `og:url`,
+          content: siteUrl,
+        },
+        {
           property: `og:url`,
           content: siteUrl,
         },
