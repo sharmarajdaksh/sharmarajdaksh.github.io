@@ -29,12 +29,6 @@ module.exports = {
         name: "sharmarajdak.sh",
       },
     },
-    // {
-    //   resolve: `gatsby-plugin-react-helmet-canonical-urls`,
-    //   options: {
-    //     siteUrl: `https://sharmarajdaksh.github.io`,
-    //   },
-    // },
     "gatsby-remark-images",
     {
       resolve: "gatsby-plugin-mdx",
