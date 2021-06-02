@@ -57,10 +57,10 @@ const Seo = ({ title, meta, description, additionalKeywords, slug }) => {
           property: `og:image`,
           content: ogImage,
         },
-        {
-          name: `og:url`,
-          content: siteUrl,
-        },
+        // {
+        //   name: `og:url`,
+        //   content: siteUrl,
+        // },
         {
           property: `og:url`,
           content: siteUrl,
