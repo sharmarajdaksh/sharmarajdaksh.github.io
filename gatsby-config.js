@@ -70,8 +70,11 @@ module.exports = {
         },
       },
     },
+    {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+        trackingIds: ["UA-198807496-1"],
+      },
+    },
   ],
-  flags: {
-    DEV_SSR: false,
-  },
 };
