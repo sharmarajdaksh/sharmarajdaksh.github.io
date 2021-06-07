@@ -7,12 +7,22 @@ body {
   text-rendering: optimizeLegibility;
   font-display: swap;
   box-sizing: border-box !important;
+}
 
+body * {
   &::-webkit-scrollbar {
     display: none;
   }
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none;
+}
+
+.blackBG {
+  background-color: black;
+}
+
+.whiteBG {
+  background-color: #eee;
 }
 
 .gatsby-resp-image-wrapper {

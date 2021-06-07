@@ -50,11 +50,23 @@ const BlogTitle = () => {
   return (
     <div className={titlesection}>
       <a href="/">
-        <h1 className={name}>{NAME}</h1>
+        <h1
+          className={name}
+          data-aos="fade-right"
+          data-aos-duration={`${750 / 2}`}
+        >
+          {NAME}
+        </h1>
       </a>
-      <h1 ref={headerRef} className={preText}>
+      <h2
+        ref={headerRef}
+        className={preText}
+        data-aos="fade-left"
+        data-aos-delay={`${750 / 2}`}
+        data-aos-duration={`${750 / 2}`}
+      >
         {BLOG_TITLE}
-      </h1>
+      </h2>
       <div
         className={classnames(backToTop, darkMode ? null : backToTopLight)}
         style={{

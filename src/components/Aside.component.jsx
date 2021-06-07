@@ -45,6 +45,10 @@ const Aside = () => {
   return (
     <aside
       className={classnames(aside__shell, !darkMode ? aside__shellLight : "")}
+      data-aos="fade-up"
+      data-aos-duration="750"
+      data-aos-once="true"
+      data-aos-offset="-50"
     >
       <div
         className={classnames(

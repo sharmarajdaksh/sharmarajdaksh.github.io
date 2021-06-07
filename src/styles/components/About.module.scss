@@ -1,7 +1,7 @@
 @import "../utils/breakpoints";
 
 .aboutLanding {
-  overflow: scroll;
+  overflow: hidden;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
@@ -12,13 +12,13 @@
   max-width: 700px;
   padding: 6rem 0;
   scroll-behavior: smooth;
+  overflow: hidden;
 
   .aboutImage {
     width: 200px;
     max-width: 90%;
     margin: auto;
     border-radius: 50%;
-    overflow: scroll;
 
     border-radius: 50% 30% 30% 50% / 50% 50% 30% 30%;
     animation: morphing 6s infinite;
@@ -40,7 +40,6 @@
   .aboutMain {
     border-left: solid 2px #777;
     padding-left: 1.5rem;
-    overflow: scroll;
     padding-top: 2rem;
     padding-bottom: 2rem;
 
@@ -136,5 +135,8 @@
   }
   87% {
     border-radius: 46% 34% 32% 53% / 46% 47% 32% 33%;
+  }
+  100% {
+    border-radius: 50% 30% 30% 50% / 50% 50% 30% 30%;
   }
 }
