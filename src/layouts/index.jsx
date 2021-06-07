@@ -47,9 +47,8 @@ const Layout = (props) => {
 
     const loadAos = async () => {
       const AOS = require("aos");
-      AOS.init({
-        once: true,
-      });
+      AOS.init({});
+      window.addEventListener("load", AOS.refresh);
     };
 
     loadAos();
@@ -68,6 +67,7 @@ const Layout = (props) => {
     <>
       <Helmet>
         <meta name="icon" href="./images/favicon.png" />
+        <body className={isDarkMode ? "blackBG" : "whiteBG"} />
       </Helmet>
       <ThemeContext.Provider value={{ theme, toggleTheme }}>
         <div

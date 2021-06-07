@@ -4,6 +4,7 @@
   line-height: 1.1;
   padding-right: 150px;
   padding-left: 150px;
+  overflow-x: hidden;
 
   .preText {
     font-size: 1.5rem;
@@ -40,6 +41,7 @@
 
     .postText {
       font-size: 1.2rem;
+      font-weight: bold;
     }
 
     .longText {

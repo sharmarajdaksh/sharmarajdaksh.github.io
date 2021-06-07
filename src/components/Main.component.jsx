@@ -10,6 +10,7 @@ import {
 import { useContext } from "react";
 import { DARK } from "../constants/Themes";
 import Landing from "./Landing.component";
+import Skills from "./Skills.component";
 
 const Main = () => {
   const { theme } = useContext(ThemeContext);
@@ -21,6 +22,9 @@ const Main = () => {
     >
       <section className={main__section}>
         <Landing />
+      </section>
+      <section className={main__section}>
+        <Skills />
       </section>
     </main>
   );

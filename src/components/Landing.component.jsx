@@ -10,12 +10,35 @@ import {
 
 const Landing = () => {
   return (
-    <div className={landing} data-aos="fade-up" data-aos-duration="500">
-      <p className={preText}>{PRETEXT}</p>
-      <h1 className={name}>{NAME}</h1>
-      <p className={postText}>{POSTTEXT}</p>
+    <div className={landing}>
+      <p
+        className={preText}
+        data-aos="fade-left"
+        data-aos-duration="500"
+        data-aos-delay="500"
+      >
+        {PRETEXT}
+      </p>
+      <h1 className={name} data-aos="fade-down" data-aos-duration="500">
+        {NAME}
+      </h1>
+      <p
+        className={postText}
+        data-aos="fade-right"
+        data-aos-duration="500"
+        data-aos-delay="1500"
+      >
+        {POSTTEXT}
+      </p>
 
-      <p className={longText}>{MAINPARA}</p>
+      <p
+        className={longText}
+        data-aos="fade-up"
+        data-aos-duration="500"
+        data-aos-delay="1000"
+      >
+        {MAINPARA}
+      </p>
     </div>
   );
 };

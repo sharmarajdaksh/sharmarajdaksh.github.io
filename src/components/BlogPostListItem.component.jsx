@@ -18,7 +18,7 @@ const BlogPostListItem = ({
   slug,
 }) => {
   return (
-    <div key={id} data-aos="fade-up" data-aos-duration="500">
+    <div key={id} data-aos="fade-up" data-aos-duration="750">
       <div className={bloglist__item}>
         <div className={bloglist__author}>
           {date} | {author} | {`${timeToRead} minute read`}

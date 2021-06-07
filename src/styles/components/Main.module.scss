@@ -6,6 +6,8 @@
   background-color: black;
   flex: 1;
   min-height: 100vh;
+  height: 100%;
+  width: 100%;
   transition: background 0.25s, color 0.25s;
 
   .main__section {
@@ -15,10 +17,6 @@
     flex-flow: column;
     justify-content: center;
     align-items: center;
-
-    &:nth-child(2) {
-      background-color: #222;
-    }
 
     @include breakpoint-tablet-vertical {
       width: 100%;
