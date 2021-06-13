@@ -35,8 +35,10 @@ const Navbar = () => {
   return (
     <nav
       className={classnames(navbar__shell, !darkMode ? navbar__shellLight : "")}
-      data-aos="fade-down"
-      data-aos-duration="750"
+      // data-aos="fade-down"
+      // data-aos-duration="750"
+      // data-aos-once="true"
+      // data-aos-offset="-100"
     >
       <ul>
         {links.map((link) => {

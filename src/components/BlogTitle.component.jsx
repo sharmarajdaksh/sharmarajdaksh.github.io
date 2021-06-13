@@ -61,7 +61,7 @@ const BlogTitle = () => {
       <h2
         ref={headerRef}
         className={preText}
-        data-aos="fade-left"
+        data-aos="fade-right"
         data-aos-delay={`${750 / 2}`}
         data-aos-duration={`${750 / 2}`}
       >
