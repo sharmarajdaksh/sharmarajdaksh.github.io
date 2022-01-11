@@ -25,7 +25,7 @@ const AboutContent = () => {
         >
           <StaticImage
             alt="Me, Dakshraj Sharma"
-            src="../images/me.png"
+            src="../images/me.jpg"
             placeholder="blurred"
             layout="constrained"
             className={aboutImage}
