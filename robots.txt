@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://sharmarajdak.sh/sitemap-index.xml
+Host: https://sharmarajdak.sh
