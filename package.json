@@ -12,7 +12,8 @@
     "start": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
-    "clean": "gatsby clean"
+    "clean": "gatsby clean",
+    "install": "npm run install --force"
   },
   "dependencies": {
     "@mdx-js/react": "^3.1.0",
