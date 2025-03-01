@@ -1,0 +1,42 @@
+*,
+html,
+body {
+  font-family: "Lato", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-display: swap;
+  box-sizing: border-box !important;
+}
+
+body * {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.blackBG {
+  background-color: black;
+}
+
+.whiteBG {
+  background-color: #eee;
+}
+
+.gatsby-resp-image-wrapper {
+  margin-top: 8% !important;
+  margin-bottom: 8% !important;
+  position: relative !important;
+  z-index: 0 !important;
+  display: block !important;
+}
+
+.gatsby-resp-image-image {
+  z-index: 0 !important;
+}
+
+// * {
+//   border: 0.1px solid #f00 !important;
+// }

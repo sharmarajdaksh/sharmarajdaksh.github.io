@@ -1,0 +1,53 @@
+@use "../utils/breakpoints";
+
+.landing {
+  line-height: 1.1;
+  padding-right: 150px;
+  padding-left: 150px;
+  overflow-x: hidden;
+
+  .preText {
+    font-size: 1.5rem;
+  }
+  .name {
+    margin-left: -5px;
+    font-size: 4rem;
+    font-weight: 900;
+  }
+  .postText {
+    font-size: 2rem;
+    font-weight: 300;
+  }
+  .longText {
+    margin-top: 1rem;
+    max-width: 40rem;
+    font-size: 1.2rem;
+    line-height: 1.2;
+  }
+
+  @include breakpoints.breakpoint-tablet-vertical {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+
+    .preText {
+      font-size: 0.9rem;
+    }
+
+    .name {
+      font-size: 2.5rem;
+      margin-left: -3px;
+    }
+
+    .postText {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .longText {
+      margin-top: 0.7rem;
+      font-size: 0.9rem;
+      line-height: 1.3;
+    }
+  }
+}

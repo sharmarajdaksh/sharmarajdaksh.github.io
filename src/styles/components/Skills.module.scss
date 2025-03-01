@@ -1,0 +1,62 @@
+@use "../utils/breakpoints";
+
+.skills {
+  .techTitle {
+    font-size: 4rem;
+    font-weight: bolder;
+    padding-bottom: 2rem;
+
+    span {
+      font-size: 2rem;
+    }
+  }
+
+  .skillsSection {
+    text-align: right;
+    .skillListItem {
+      width: 100%;
+      display: flex;
+      line-height: 1.5;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      .skillListTitle {
+        font-size: 1.8rem;
+        font-weight: bolder;
+        margin-left: 3rem;
+        display: flex;
+        align-items: flex-start;
+      }
+      .skillListContent {
+        text-align: left;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: flex-start;
+      }
+    }
+  }
+
+  @include breakpoints.breakpoint-tablet-vertical {
+    .techTitle {
+      font-size: 2rem;
+      font-weight: bolder;
+      margin-bottom: 2rem;
+
+      span {
+        font-size: 1rem;
+      }
+    }
+
+    .skillsSection {
+      .skillListItem {
+        margin-bottom: 1rem;
+        .skillListTitle {
+          font-size: 1rem;
+          margin-left: 1rem;
+        }
+        .skillListContent {
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+}

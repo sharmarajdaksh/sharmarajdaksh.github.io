@@ -1,0 +1,52 @@
+@use "../utils/breakpoints";
+
+.navbar__shell {
+  position: fixed;
+  right: 0;
+  display: flex;
+  padding-top: 1rem;
+  padding-right: 1rem;
+  flex-flow: row-reverse;
+  z-index: 1000000;
+
+  transition: background 0.25s, color 0.25s;
+
+  color: #bbb;
+
+  ul {
+    font-size: 1rem;
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: row;
+
+    li {
+      font-weight: bold;
+      font-kerning: normal;
+      letter-spacing: 0.025rem;
+      cursor: pointer;
+      margin-right: 1rem;
+      transition: all 0.25s;
+      &:hover {
+        color: #eee;
+      }
+    }
+  }
+
+  @include breakpoints.breakpoint-tablet-vertical {
+    padding-right: 0.5rem;
+    padding-top: 0.5rem;
+    color: #eee;
+
+    ul {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.navbar__shellLight {
+  color: #555;
+
+  ul > li:hover {
+    color: #222;
+  }
+}

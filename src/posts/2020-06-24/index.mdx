@@ -1,0 +1,358 @@
+---
+title: Github OAuth with Go
+slug: github-oauth-with-go
+author: Dakshraj Sharma
+date: June 24, 2020
+dateNumeric: 2020-06-24
+listingContent: Because do you really need to implement your own authentication service?
+keywords: go, golang, github, oauth, oauth2, rest, authentication
+embeddedImagesLocal:
+  - authorizeapp.png
+  - datajson.png
+  - logintogithub.png
+  - oauthapp.png
+  - oauthflow.png
+  - registernewapp.png
+  - updatedappurls.png
+---
+
+You've probably come accross a number of application with the "**Login with Github**" option, and why not - developers love Github more than Google or Facebook. When developing your own side-projects, you often want to implement some sort of authentication or user-data management. But you really don't need to implement your own authentication services for every project - OAuth usign applications like Github does the job perfectly well.
+
+## Why should I use Github OAuth, and not my own, superior, custom authentications service?
+
+Using Github OAuth over your own solution has several advantages:
+
+- Github's authentication and data management approach is _probably_ better than yours (please don't be offended).
+- Convenient for users, since they won't need to manage another password.
+- Quicker to implement (compared to your own solution). This is a very important, but perhaps neglected point for developer side projects. You don't want to spend forever on a single project (unless you really know you do).
+- Simple to understand and implement.
+
+## Okay, I might try it. But how does it work?
+
+Let's try to understand the authentication through the following diagram.
+
+![OAuth Flow](./oauthflow.png)
+
+What's happening here? Let's go step by step.
+
+- First, the client (frontend) navigates to a route designated for the github login. Say, '/login/github'
+- When this route is fetched from the server (GET request to the server), the server redirects the user to a special github.com route where he can authorize the application. The route is of the form: `https://github.com/login/oauth/authorize?client_id=GITHUBCLIENTID&redirect_uri=/login/github/callback`. Here, the user will login into github (if not already logged in), and on the next page, authorize the application to his information.
+- Once the user accepts, the Github api sends a request to the redirect_uri specified in the earlier request (/login/github/callback in this case). The request gives us a **code** as a query parameter. We extract this code. This will be used later for getting user data.
+- Next, we send a request to the GET endpoint `https://github.com/login/oauth/authorize`. As query params, we send our client id and client secret (which we generate in our Github account) as well as the code we acquired in the last step. Here, at this step we can be assured that the returned data will be valid as it comes directly from Github.
+- The above request gets us a response in the following form: `access_token=e72e16c7e42f292c6912e7710c838347ae178b4a&token_type=bearer`. The server needs to extract the access_token from this request, and use it for it's final request for data.
+- Now, the server sends a GET request to the endpoint `https://api.github.com/user`. With the authorization header set, something like: `Authorization: token e72e16c7e42f292c6912e7710c838347ae178b4a`
+- The response to this request is: MAGIC. No, it's the user data! That's what we wanted all along, right. No need to manage it yourself, just let Github handle enough.
+
+That was simple enough to understand, wasn't it?
+
+Let's see how you'd implement Github OAuth in your own Golang backend.
+
+## Register a Github OAuth application and initial setup
+
+In your Github account, navigate to Settings > Developer Settings > OAuth Apps, and click on New OAuth App.
+
+![New OAuth App](oauthapp.png)
+
+Then, fill in the necessary details and proceed. Do note that the URL you fill in matters. I will be running my app on localhost:3000 and hence use the below URLs. Still, you can always come back and change this later (as we will do later).
+
+![Register New App](registernewapp.png)
+
+You should now be able to acquire a Client ID and Client Secret. In your project directory, create a .env file, and store in it these values in the form below. (P.S. - Do not forget to add .env to your .gitignore file if you intend to push this project to version control later).
+
+```
+CLIENT_ID=xxxxxxxxxxxxxxxxxxxx
+CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+There we go. We are now setup and ready to code the implementation!
+
+## Implementing authentication with a Go backend
+
+**Disclaimer before we continue**: If you are proceeding to read beyond here, I am hoping you have some basic understanding of how Go code is structured, and the basics of it's functioning and working principles (like, for example, how Go does not do any JS-like magic for us). Still, even if you don't, you might want to continue to be able to get a basic gist of how OAuth is actually implemented. I hope my comments and explanations will help you for the same! Let's start.
+
+Before we continue, let me clarify that I did go back and change the URLs in my GIthub OAuth page to the following:
+
+![Updated App URLs](updatedappurls.png)
+
+Inside your project directory run
+
+```bash
+go mod init github.com/sharmarajdaksh/github-oauth-go
+```
+
+Of course, replace the github username and reponame with your own.
+
+Now, create main.go and let's start with the necessary packages and imports.
+
+```go
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"os"
+
+	"github.com/joho/godotenv"
+)
+```
+
+We define an init function, which will automatically execute before the main function. Inside it, we will simply load up the environment variables from the .env file we created earlier. If it doesn't exist, the code panics.
+
+```go
+func init() {
+	// loads values from .env into the system
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("No .env file found")
+	}
+}
+```
+
+In out main function, we'll set up our server to listen on port 3000. We define 4 routes: '/', '/auth/github', '/auth/github/callback', and '/loggedin'. Their purpose should be self explanatory. Let's see main.
+
+```go
+func main() {
+
+	// Simply returns a link to the login route
+	http.HandleFunc("/", rootHandler)
+
+	// Login route
+	http.HandleFunc("/login/github/", githubLoginHandler)
+
+	// Github callback
+	http.HandleFunc("/login/github/callback", githubCallbackHandler)
+
+	// Route where the authenticated user is redirected to
+	http.HandleFunc("/loggedin", func(w http.ResponseWriter, r *http.Request) {
+		loggedinHandler(w, r, "")
+	})
+
+	fmt.Println("[ UP ON PORT 3000 ]")
+	log.Panic(
+		http.ListenAndServe(":3000", nil),
+	)
+}
+```
+
+Each `HandleFunc` call requires a Handler as the second argument. We'll see their implementation below. Interesting here is the `HandleFunc` for the `/loggedin` route. We implement it differently simply to allow us to pass data to the handler from elsewhere (as we will later). The actual `loggedinHandler` is simple:
+
+```go
+func loggedinHandler(w http.ResponseWriter, r *http.Request, githubData string) {
+	if githubData == "" {
+		// Unauthorized users get an unauthorized message
+		fmt.Fprintf(w, "UNAUTHORIZED!")
+		return
+	}
+
+    // Set return type JSON
+	w.Header().Set("Content-type", "application/json")
+
+	// Prettifying the json
+	var prettyJSON bytes.Buffer
+	// json.indent is a library utility function to prettify JSON indentation
+	parserr := json.Indent(&prettyJSON, []byte(githubData), "", "\t")
+	if parserr != nil {
+		log.Panic("JSON parse error")
+	}
+
+	// Return the prettified JSON as a string
+	fmt.Fprintf(w, string(prettyJSON.Bytes()))
+}
+```
+
+All we do here is return prettified JSON data which is passed to it from elsewhere if provided, otherwise it returns an unauthorized message.
+
+The `rootHandler` is even simpler: It merely returns an anchor tag linking to `/login/github`.
+
+```go
+func rootHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, `<a href="/login/github/">LOGIN</a>`)
+}
+```
+
+Before proceeding with the actual implementation of OAuth login, we define two utility functions that simply return the client id and client secret environment variables. As an alternative to this, you may have had these as global variables, and that's a perfectly acceptable approach.
+
+```go
+func getGithubClientID() string {
+
+	githubClientID, exists := os.LookupEnv("CLIENT_ID")
+	if !exists {
+		log.Fatal("Github Client ID not defined in .env file")
+	}
+
+	return githubClientID
+}
+
+func getGithubClientSecret() string {
+
+	githubClientSecret, exists := os.LookupEnv("CLIENT_SECRET")
+	if !exists {
+		log.Fatal("Github Client ID not defined in .env file")
+	}
+
+	return githubClientSecret
+}
+```
+
+Now, let's look into our `githubLoginHandler` which handles the `/login/github` route.
+
+```go
+func githubLoginHandler(w http.ResponseWriter, r *http.Request) {
+	// Get the environment variable
+    githubClientID := getGithubClientID()
+
+    // Create the dynamic redirect URL for login
+	redirectURL := fmt.Sprintf(
+		"https://github.com/login/oauth/authorize?client_id=%s&redirect_uri=%s",
+		githubClientID,
+		"http://localhost:3000/login/github/callback"
+	)
+
+	http.Redirect(w, r, redirectURL, 301)
+}
+```
+
+Very simple, isn't it? We just redirect the user to another URL, and forget about it. That is all this handler needs to do. These URLs should probably have not been hardcoded, but for this small example, let's accept them as they are. Implementing this method means that when the user visits `/login/github`, they should see the Github login screen or the authorize app page.
+
+![Login to Github](logintogithub.png)
+
+If the user is already logged in, or after they log in, they will see this screen:
+
+![Authorize app](authorizeapp.png)
+
+Once the user accepts, a request is sent by Github to the route `/login/github/callback`, which is handled by the `githubCallbackHandler`. It does a lot, but don't worry, we'll go through it step by step. Here is the code for the handler:
+
+```go
+func githubCallbackHandler(w http.ResponseWriter, r *http.Request) {
+	code := r.URL.Query().Get("code")
+
+	githubAccessToken := getGithubAccessToken(code)
+
+	githubData := getGithubData(githubAccessToken)
+
+	loggedinHandler(w, r, githubData)
+}
+
+```
+
+Believe me, it does a lot. I've just extracted major parts to the functions `getGithubAccessToken` and `getGithubData`. Here's how it works:
+
+- We extract the `code` query parameter sent by github to this route.
+- This code is sent to `getGithubAccessToken`, which exchanges the code along with our github client id and secret to get an authentication token and returns it.
+- The returned authentication token is then passed to `getGithubData`, which returns the user data acquired from github.
+- We then execute the `loggedinHandler` with the `Request` and `ResponseWriter`, passing the `githubData` as a third argument.
+
+The concept is simple to understand with all this abstractions, and we have now covered our handlers as they work.
+
+Now, let's see how we will implement `getGithubAccessToken` and `getGithubData`, the functions which do the actual heavy lifting behind the scenes.
+
+The `getGithubAccessToken` received the code returned by Github as an argument, and is responsible to use it, along with the Github client id and client secret, to get a unique access token which will finally allow us to get the necessary user data. Let's see how this method works in code.
+
+```go
+func getGithubAccessToken(code string) string {
+
+	clientID := getGithubClientID()
+	clientSecret := getGithubClientSecret()
+
+    // Set us the request body as JSON
+	requestBodyMap := map[string]string{
+		"client_id": clientID,
+		"client_secret": clientSecret,
+		"code": code
+	}
+	requestJSON, _ := json.Marshal(requestBodyMap)
+
+    // POST request to set URL
+	req, reqerr := http.NewRequest(
+		"POST",
+		"https://github.com/login/oauth/access_token",
+		bytes.NewBuffer(requestJSON)
+	)
+	if reqerr != nil {
+		log.Panic("Request creation failed")
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept", "application/json")
+
+    // Get the response
+	resp, resperr := http.DefaultClient.Do(req)
+	if resperr != nil {
+		log.Panic("Request failed")
+	}
+
+    // Response body converted to stringified JSON
+	respbody, _ := ioutil.ReadAll(resp.Body)
+
+	// Represents the response received from Github
+	type githubAccessTokenResponse struct {
+		AccessToken string `json:"access_token"`
+		TokenType   string `json:"token_type"`
+		Scope       string `json:"scope"`
+	}
+
+    // Convert stringified JSON to a struct object of type githubAccessTokenResponse
+	var ghresp githubAccessTokenResponse
+	json.Unmarshal(respbody, &ghresp)
+
+    // Return the access token (as the rest of the
+	// details are relatively unnecessary for us)
+	return ghresp.AccessToken
+}
+```
+
+There we have it. It's fairly simple in what it does:
+
+- Form a JSON object that has the code, our github client id, and out client secret.
+- Send the JSON as body for a POST request.
+- Get the JSON response, extract from it the AccessToken, and return it (as a string).
+
+For people coming from, say, Javascript/Nodejs, you might be thinking- this could've been done in 10 lines of Javascript. I don't disagree. That's just how Go is. It is low level enough to not do any magic for you, but high level enough to provide extremely powerful libraries for tasks like http requests and JSON manipulation.
+
+At this point, now, we have our AccessToken. We are nearly done! The last thing we need to do is use the access token we received and to tell Github we're authorized to fetch the current user's data. This happens in `getGithubData`.
+
+```go
+func getGithubData(accessToken string) string {
+    // Get request to a set URL
+    req, reqerr := http.NewRequest(
+		"GET",
+		"https://api.github.com/user",
+		nil
+	)
+	if reqerr != nil {
+		log.Panic("API Request creation failed")
+	}
+
+    // Set the Authorization header before sending the request
+    // Authorization: token XXXXXXXXXXXXXXXXXXXXXXXXXXX
+	authorizationHeaderValue := fmt.Sprintf("token %s", accessToken)
+	req.Header.Set("Authorization", authorizationHeaderValue)
+
+    // Make the request
+	resp, resperr := http.DefaultClient.Do(req)
+	if resperr != nil {
+		log.Panic("Request failed")
+	}
+
+    // Read the response as a byte slice
+	respbody, _ := ioutil.ReadAll(resp.Body)
+
+    // Convert byte slice to string and return
+	return string(respbody)
+}
+```
+
+There we are. A simple GET request gets back to us the user's data in the response body, which we may use as we like.
+In our case, as you see in the `githubCallbackHandler` method, we send this data to the `loggedInHandler`, and this data is displayed on the '/loggedin' route. For me, it was something like this:
+
+![User data](datajson.png)
+
+In a real app, of course you could done something more useful with this user data: save it to a database, use it in your frontend, or anything else you want.
+
+There we have it! We've implemented Github OAuth into our application backend. The complete application code is available to view [here](https://github.com/sharmarajdaksh/github-oauth-go).
+
+I hope you learnt something new today! The principles discussed here should be effectively transferrable to any other language backend, or even for other OAuth providers like Google or Facebook, although the documentation should be your best friend in those cases.
+
+That's it for now, dear reader. Until next time, happy learning.
