@@ -71,7 +71,10 @@ const AboutContent = () => {
               >
                 my favorite electronic music
               </a>
-            ). You probably didn't want to know all that, so let's get in touch!
+            ). 
+            <br/>
+            <br/>
+            You probably didn't want to know all that, so let's get in touch!
             To see a list of my technical skills and interests, or my resume,
             check out{" "}
               <a href={LINKEDIN_URL} target="__blank">
